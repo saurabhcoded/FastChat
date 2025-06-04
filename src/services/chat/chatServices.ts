@@ -24,3 +24,22 @@ export const createChatElement = (attr: CreateChatElementAttrI): chatDataI => {
   };
   return chatData;
 };
+
+export const getGenderIcon = (
+  gender: string | undefined,
+): {icon: string; color: string} => {
+  let genderIconOptions = {
+    Male: 'gender-male',
+    Female: 'gender-female',
+    Gay: 'gender-transgender',
+  };
+  let genderColorOptions = {
+    Male: '#4287f5',
+    Female: '#f551ea',
+    Gay: '#8314d9',
+  };
+  return {
+    icon: genderIconOptions?.[gender] ?? genderIconOptions?.['Male'],
+    color: genderColorOptions?.[gender] ?? genderColorOptions?.['Male'],
+  };
+};

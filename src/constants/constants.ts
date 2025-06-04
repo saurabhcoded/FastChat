@@ -12,3 +12,9 @@ export const ColorSchemes = {
 export const ChatEnums = {
   timeFormat: 'HH:MM',
 };
+
+export const AppRoutes = {
+  chat: {path: 'chat', label: 'Chat'},
+  settings: {path: 'settings', label: 'Settings'},
+  friends: {path: 'friends', label: 'Friends'},
+};

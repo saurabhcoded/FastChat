@@ -1,49 +1,274 @@
-import { Link } from "@react-navigation/native";
-import React from "react";
-import { Text, View } from "react-native";
+import {UiColors} from '@/constants/colors';
+import React, {useState} from 'react';
+import {SafeAreaView, ScrollView, TouchableOpacity, View} from 'react-native';
+import {
+  Avatar,
+  Badge,
+  Card,
+  Divider,
+  IconButton,
+  List,
+  Switch,
+  Text,
+} from 'react-native-paper';
+import styles from './styles';
 
-const SettingScreen: React.FC = () => {
+const SettingsPage = () => {
+  const [userProfile, setUserProfile] = useState({
+    name: 'Sarah Johnson',
+    userId: '@sarah_j23',
+    avatar: null,
+    status: 'Online',
+  });
+
+  const [settings, setSettings] = useState({
+    autoAcceptFriendRequests: false,
+    showOnlineStatus: true,
+    readReceipts: true,
+    notifications: true,
+  });
+
+  const handleToggleSetting = settingKey => {
+    setSettings(prev => ({
+      ...prev,
+      [settingKey]: !prev[settingKey],
+    }));
+  };
+
+  const SectionTitle = ({title}) => (
+    <Text style={styles.sectionTitle}>{title}</Text>
+  );
+
+  const SocialItem = ({icon, title, subtitle, badgeCount, onPress}) => (
+    <Card style={styles.listCard}>
+      <List.Item
+        title={title}
+        description={subtitle}
+        left={props => (
+          <List.Icon {...props} icon={icon} color={UiColors.primary.main} />
+        )}
+        right={() => (
+          <View style={styles.listRightContainer}>
+            {badgeCount > 0 && (
+              <Badge style={styles.badge} size={20}>
+                {badgeCount}
+              </Badge>
+            )}
+            <List.Icon icon="chevron-right" color={UiColors.neutral.dark} />
+          </View>
+        )}
+        onPress={onPress}
+        titleStyle={styles.listTitle}
+        descriptionStyle={styles.listDescription}
+        style={styles.listItem}
+      />
+    </Card>
+  );
+
+  const SettingToggle = ({title, description, value, onValueChange}) => (
+    <Card style={styles.settingCard}>
+      <View style={styles.settingContainer}>
+        <View style={styles.settingTextContainer}>
+          <Text style={styles.settingTitle}>{title}</Text>
+          {description && (
+            <Text style={styles.settingDescription}>{description}</Text>
+          )}
+        </View>
+        <Switch
+          value={value}
+          onValueChange={onValueChange}
+          thumbColor={value ? UiColors.primary.main : UiColors.neutral.medium}
+          trackColor={{
+            false: UiColors.neutral.light,
+            true: UiColors.primary.light,
+          }}
+        />
+      </View>
+    </Card>
+  );
+
   return (
-    <View>
-      <Text>SettingSscreen</Text>
-      <Text>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut accusantium
-        quidem atque quod temporibus modi ullam perferendis explicabo minima
-        officia reiciendis, esse tempora iure autem optio excepturi vero
-        recusandae numquam rem sequi mollitia. Voluptatem non odit assumenda
-        autem magni amet iste at, eaque placeat sit veniam tempore doloremque
-        alias neque rem dolor quas maxime quo vero, velit exercitationem qui
-        ipsa ratione expedita! Reiciendis totam molestiae magni eaque sint quam
-        sunt nihil amet, cum consectetur accusamus provident ab, praesentium nam
-        ex magnam unde, porro dolor repellendus? Consequatur dolorem, ratione,
-        necessitatibus quidem fuga temporibus deleniti dolor similique
-        praesentium in natus libero, ipsum est voluptate et assumenda aliquam
-        exercitationem impedit sint molestias consequuntur harum iusto
-        voluptates? Voluptates necessitatibus omnis quia aut atque. Aut
-        voluptate, enim facere optio ex sed molestiae eligendi quisquam odit
-        ratione delectus laboriosam in incidunt magni ullam sint eos iure
-        recusandae! Perspiciatis temporibus ex voluptate, odit iusto repellat
-        officiis earum deserunt, repudiandae id illo beatae quia ad? Dolorem
-        nisi, necessitatibus quas doloribus magni esse eius enim at, explicabo
-        quaerat quos eligendi sunt reiciendis nemo et? Exercitationem, eius
-        dolores quia voluptatem a vitae eaque porro magnam ab voluptatibus,
-        mollitia ratione nobis excepturi, veniam nulla quam impedit eveniet iure
-        tenetur unde iste facere. Quas error voluptas aut asperiores quia maxime
-        aperiam iusto animi atque natus quaerat, optio soluta explicabo eveniet
-        quae cupiditate veritatis blanditiis officiis aliquam ullam sed. Qui vel
-        itaque praesentium possimus dolorem distinctio libero consequuntur quo
-        harum illo? A aspernatur quia vero tempora consectetur tempore veniam?
-        Maxime, ullam! Ea vero quisquam iste quidem rerum blanditiis et
-        voluptatem suscipit laudantium ex eligendi quaerat, nisi adipisci,
-        similique perspiciatis nihil optio porro, molestiae quasi quas magnam
-        minima exercitationem! Fugit exercitationem a fuga! Repudiandae corporis
-        labore eligendi iste expedita, eum at unde exercitationem dignissimos
-        amet inventore quia quasi placeat porro reprehenderit accusamus soluta
-        vitae.
-      </Text>
-      <Link screen="Chat">Chat</Link>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}>
+        {/* Profile Section */}
+        <ProfileHeader userProfile={userProfile} />
+
+        {/* Social Section */}
+        <View style={styles.section}>
+          <SectionTitle title="Social" />
+          <SocialItem
+            icon="account-group"
+            title="Friends"
+            subtitle="Manage your friend list"
+            badgeCount={12}
+            onPress={() => console.log('Friends pressed')}
+          />
+          <SocialItem
+            icon="account-plus"
+            title="Following"
+            subtitle="People you follow"
+            badgeCount={8}
+            onPress={() => console.log('Following pressed')}
+          />
+          <SocialItem
+            icon="account-cancel"
+            title="Blocked"
+            subtitle="Blocked users"
+            badgeCount={0}
+            onPress={() => console.log('Blocked pressed')}
+          />
+        </View>
+
+        {/* Chat Settings Section */}
+        <View style={styles.section}>
+          <SectionTitle title="Chat Settings" />
+          <SettingToggle
+            title="Auto Accept Friend Requests"
+            description="Automatically accept incoming friend requests"
+            value={settings.autoAcceptFriendRequests}
+            onValueChange={() =>
+              handleToggleSetting('autoAcceptFriendRequests')
+            }
+          />
+          <SettingToggle
+            title="Show Online Status"
+            description="Let others see when you're online"
+            value={settings.showOnlineStatus}
+            onValueChange={() => handleToggleSetting('showOnlineStatus')}
+          />
+          <SettingToggle
+            title="Read Receipts"
+            description="Show when you've read messages"
+            value={settings.readReceipts}
+            onValueChange={() => handleToggleSetting('readReceipts')}
+          />
+          <SettingToggle
+            title="Push Notifications"
+            description="Receive notifications for new messages"
+            value={settings.notifications}
+            onValueChange={() => handleToggleSetting('notifications')}
+          />
+        </View>
+
+        {/* Additional Options */}
+        <View style={styles.section}>
+          <SectionTitle title="More" />
+          <SocialItem
+            icon="palette"
+            title="Chat Themes"
+            subtitle="Customize your chat appearance"
+            badgeCount={0}
+            onPress={() => console.log('Themes pressed')}
+          />
+          <SocialItem
+            icon="bell"
+            title="Notification Settings"
+            subtitle="Configure notification preferences"
+            badgeCount={0}
+            onPress={() => console.log('Notifications pressed')}
+          />
+        </View>
+
+        {/* Settings Summary */}
+        <Card style={styles.summaryCard}>
+          <View style={styles.summaryContainer}>
+            <Text style={styles.summaryTitle}>Current Settings</Text>
+            <Divider style={styles.summaryDivider} />
+            <View style={styles.summaryItem}>
+              <Text style={styles.summaryLabel}>Auto Accept:</Text>
+              <Text
+                style={[
+                  styles.summaryValue,
+                  {
+                    color: settings.autoAcceptFriendRequests
+                      ? UiColors.tertiary.main
+                      : UiColors.neutral.dark,
+                  },
+                ]}>
+                {settings.autoAcceptFriendRequests ? 'Enabled' : 'Disabled'}
+              </Text>
+            </View>
+            <View style={styles.summaryItem}>
+              <Text style={styles.summaryLabel}>Online Status:</Text>
+              <Text
+                style={[
+                  styles.summaryValue,
+                  {
+                    color: settings.showOnlineStatus
+                      ? UiColors.tertiary.main
+                      : UiColors.neutral.dark,
+                  },
+                ]}>
+                {settings.showOnlineStatus ? 'Visible' : 'Hidden'}
+              </Text>
+            </View>
+            <View style={styles.summaryItem}>
+              <Text style={styles.summaryLabel}>Read Receipts:</Text>
+              <Text
+                style={[
+                  styles.summaryValue,
+                  {
+                    color: settings.readReceipts
+                      ? UiColors.tertiary.main
+                      : UiColors.neutral.dark,
+                  },
+                ]}>
+                {settings.readReceipts ? 'On' : 'Off'}
+              </Text>
+            </View>
+            <View style={styles.summaryItem}>
+              <Text style={styles.summaryLabel}>Notifications:</Text>
+              <Text
+                style={[
+                  styles.summaryValue,
+                  {
+                    color: settings.notifications
+                      ? UiColors.tertiary.main
+                      : UiColors.neutral.dark,
+                  },
+                ]}>
+                {settings.notifications ? 'Enabled' : 'Disabled'}
+              </Text>
+            </View>
+          </View>
+        </Card>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
-export default SettingScreen;
+const ProfileHeader = ({userProfile}) => (
+  <Card style={styles.profileCard}>
+    <View style={styles.profileContainer}>
+      <View style={styles.avatarContainer}>
+        <Avatar.Text
+          size={80}
+          label={userProfile.name.charAt(0)}
+          style={styles.avatar}
+          labelStyle={styles.avatarLabel}
+        />
+        <TouchableOpacity style={styles.cameraButton}>
+          <IconButton icon="camera" iconColor={UiColors.white.main} size={16} />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.profileInfo}>
+        <Text style={styles.userName}>{userProfile.name}</Text>
+        <Text style={styles.userId}>{userProfile.userId}</Text>
+        <View style={styles.statusContainer}>
+          <View style={styles.statusDot} />
+          <Text style={styles.statusText}>{userProfile.status}</Text>
+        </View>
+      </View>
+
+      <TouchableOpacity style={styles.editButton}>
+        <IconButton icon="pencil" iconColor={UiColors.primary.main} size={20} />
+      </TouchableOpacity>
+    </View>
+  </Card>
+);
+
+export default SettingsPage;

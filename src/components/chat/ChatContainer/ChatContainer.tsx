@@ -2,12 +2,13 @@ import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, ScrollView} from 'react-native';
 import ChatElement from './ChatElement';
 import styles from './styles';
-import ChatUserProfile from './chatUserProfile';
+import ChatUserProfile from './ChatUserProfile';
 
 export interface chatUserI {
   id: string;
   userName: string;
   userProfile: string;
+  gender: string;
   userLongLat: string | null;
   createdAt: string;
   updatedAt: string;

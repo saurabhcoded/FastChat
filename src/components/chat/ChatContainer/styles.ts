@@ -1,13 +1,14 @@
+import {UiColors} from '@/constants/colors';
 import {StyleSheet} from 'react-native';
 
 const BubbleBorderRadius = 15;
 
 const styles = StyleSheet.create({
   chatWrapper: {
-    flex: 1
+    flex: 1,
   },
   chatContainer: {
-    paddingTop:10
+    paddingTop: 10,
   },
   chatElement: {
     borderWidth: 1,
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F1F0F0',
     maxWidth: '70%',
     paddingHorizontal: 15,
-    marginBottom:10
+    marginBottom: 10,
   },
   currentChatElement: {
     alignSelf: 'flex-end',
@@ -55,6 +56,55 @@ const styles = StyleSheet.create({
     // padding: ,
     backgroundColor: '#FFC0CB',
     color: '#FF1493',
+  },
+  // Chat User Profile Styles
+  userProfileContainer: {
+    backgroundColor: UiColors.neutral.light,
+  },
+  userAvatarRow: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  userAvatarRowTextContent: {
+    gap: 3,
+    justifyContent: 'center',
+  },
+  genderLabel: {
+    color: UiColors.font.secondary,
+    alignSelf: 'flex-start',
+  },
+  divider: {
+    marginVertical: 10,
+  },
+  mainButtonRow: {
+    paddingVertical: 10,
+    flexDirection: 'row',
+    gap: 5,
+  },
+  mainButton: {
+    flex: 1,
+    borderColor: UiColors.primary.darkest,
+  },
+  mainButtonLabel: {
+    // color: UiColors.white.main,
+  },
+  featureButtonCol: {
+    gap: 5,
+  },
+  featureButton: {
+    borderRadius: 15,
+  },
+  featureButtonLabel: {
+    fontSize: 16,
+  },
+  featureButtonContent: {
+    flexDirection: 'row',
+    width: '100%',
+    borderRadius: 5,
+    padding: 8,
+    backgroundColor: UiColors.white.soft,
+    justifyContent: 'flex-start',
+    alignContent: 'flex-start',
   },
 });
 

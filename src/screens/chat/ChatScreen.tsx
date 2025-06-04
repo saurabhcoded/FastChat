@@ -11,7 +11,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
-  ScrollView,
   View,
 } from 'react-native';
 import {Button, Text} from 'react-native-paper';
@@ -25,6 +24,7 @@ const currentUser: chatUserI = {
   id: '1234',
   userName: 'Saurabh Sharma',
   userProfile: 'https://avatar.iran.liara.run/public/1',
+  gender: 'Male',
   userLongLat: null,
   createdAt: createdDate,
   updatedAt: createdDate,
@@ -35,6 +35,7 @@ const OtherUser: chatUserI = {
   id: '2345',
   userName: 'Vinay Singh',
   userProfile: 'https://avatar.iran.liara.run/public/2',
+  gender: 'Female',
   userLongLat: null,
   createdAt: createdDate,
   updatedAt: createdDate,
